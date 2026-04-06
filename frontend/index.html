@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mon App Cloud</title>
+  </head>
+  <body>
+    <h1>Bienvenue sur mon TP Azure !</h1>
+    <p>Message du back-end : <span id="message">Chargement...</span></p>
+
+    <script>
+      // Plus tard, on remplacera ça par l'URL de ton back-end sur Azure
+      const backendUrl = "http://localhost:3000/api/hello";
+
+      fetch(backendUrl)
+        .then((response) => response.json())
+        .then(
+          (data) =>
+            (document.getElementById("message").innerText = data.message),
+        )
+        .catch(
+          (error) =>
+            (document.getElementById("message").innerText =
+              "Erreur de connexion au back-end"),
+        );
+    </script>
+  </body>
+</html>
