@@ -6,23 +6,25 @@
   </head>
   <body>
     <h1>Bienvenue sur mon TP Azure !</h1>
-    <p>Message du back-end : <span id="message">Chargement...</span></p>
+    <p>
+      Message du back-end :
+      <strong id="message" style="color: blue">Chargement...</strong>
+    </p>
 
     <script>
-      // Plus tard, on remplacera ça par l'URL de ton back-end sur Azure
-      const backendUrl = "http://localhost:3000/api/hello";
+      const backendUrl =
+        "https://azuretyf-a9duaxfbc5cxd3ew.spaincentral-01.azurewebsites.net/api/hello";
 
       fetch(backendUrl)
         .then((response) => response.json())
-        .then(
-          (data) =>
-            (document.getElementById("message").innerText = data.message),
-        )
-        .catch(
-          (error) =>
-            (document.getElementById("message").innerText =
-              "Erreur de connexion au back-end"),
-        );
+        .then((data) => {
+          document.getElementById("message").innerText = data.message;
+        })
+        .catch((error) => {
+          document.getElementById("message").innerText =
+            "Erreur de connexion au back-end";
+          document.getElementById("message").style.color = "red";
+        });
     </script>
   </body>
 </html>
