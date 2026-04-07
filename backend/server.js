@@ -1,26 +1,37 @@
+const { SecretClient } = require("@azure/keyvault-secrets");
+const { DefaultAzureCredential } = require("@azure/identity");
+const sql = require("mssql");
 const express = require("express");
 const cors = require("cors");
+
 const app = express();
-const port = process.env.PORT || 3000;
-
 app.use(cors());
+app.use(express.json());
 
-app.get("/api/hello", (req, res) => {
-  const dbConnectionString = process.env.AZURE_PARTIEL;
+let pool;
 
-  if (dbConnectionString) {
-    res.json({
-      message:
-        "Hello depuis Azure !  Le Back-end a bien récupéré le secret de la BDD depuis le Key Vault !",
-    });
-  } else {
-    res.json({
-      message:
-        "Hello depuis Azure !  Erreur : Le secret du Key Vault est introuvable.",
-    });
+async function getDbConnection() {
+  const credential = new DefaultAzureCredential();
+  const client = new SecretClient(
+    "https://k-partiel-azure1.vault.azure.net/",
+    credential,
+  );
+  const secret = await client.getSecret("DB-AZRUE");
+  pool = await sql.connect(secret.value);
+  console.log("✅ Connecté à la base de données !");
+}
+
+// Route de test (prouve que front → back → BDD fonctionne)
+app.get("/api/test", async (req, res) => {
+  try {
+    const result = await pool.request().query("SELECT 1 AS ok");
+    res.json({ status: "ok", db: result.recordset });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Back-end en cours d'exécution sur le port ${port}`);
+const PORT = process.env.PORT || 3000;
+getDbConnection().then(() => {
+  app.listen(PORT, () => console.log(`🚀 Serveur lancé sur le port ${PORT}`));
 });
