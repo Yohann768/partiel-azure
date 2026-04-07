@@ -18,10 +18,9 @@ async function getDbConnection() {
   );
   const secret = await client.getSecret("DB-AZRUE");
   pool = await sql.connect(secret.value);
-  console.log("✅ Connecté à la base de données !");
+  console.log("✅ Connect à la base de données !");
 }
 
-// Route de test (prouve que front → back → BDD fonctionne)
 app.get("/api/test", async (req, res) => {
   try {
     const result = await pool.request().query("SELECT 1 AS ok");
