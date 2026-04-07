@@ -8,10 +8,9 @@ on:
       - "backend/**"
 
 jobs:
-  deploy:
-    name: Déploiement Backend
+  test:
+    name: Tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Check du code
         uses: actions/checkout@v3
@@ -26,6 +25,22 @@ jobs:
 
       - name: Tests automatisés
         run: cd backend && npm test
+
+  deploy:
+    name: Déploiement Backend
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Check du code
+        uses: actions/checkout@v3
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+
+      - name: Installation des dépendances
+        run: cd backend && npm install
 
       - name: Déploiement sur Azure App Service
         uses: azure/webapps-deploy@v2
