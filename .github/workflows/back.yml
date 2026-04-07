@@ -12,37 +12,37 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Check du code
+      - name: Check code
         uses: actions/checkout@v3
 
-      - name: Installation de Node.js
+      - name: Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.x"
 
-      - name: Installation des dépendances
+      - name: Dépendances
         run: cd backend && npm install
 
-      - name: Tests automatisés
+      - name: Tests ok
         run: cd backend && npm test
 
   deploy:
-    name: Déploiement Backend
+    name: Backend
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - name: Check du code
+      - name: Check code
         uses: actions/checkout@v3
 
-      - name: Installation de Node.js
+      - name: Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.x"
 
-      - name: Installation des dépendances
+      - name: Dépendances
         run: cd backend && npm install
 
-      - name: Déploiement sur Azure App Service
+      - name: Déploiement
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_APP }}

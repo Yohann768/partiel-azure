@@ -40,5 +40,5 @@ app.get("/api/hello", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 getDbConnection().then(() => {
-  app.listen(PORT, () => console.log(`🚀 Serveur lancé sur le port ${PORT}`));
+  app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
 });

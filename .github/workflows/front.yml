@@ -9,14 +9,14 @@ on:
 
 jobs:
   deploy:
-    name: Déploiement Frontend
+    name: Frontend
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout du code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Upload vers Azure Blob Storage
+      - name: Upload
         uses: azure/CLI@v1
         with:
           inlineScript: |
