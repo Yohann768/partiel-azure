@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check du cde
+      - name: Check du code
         uses: actions/checkout@v3
 
       - name: Installation de Node.js
@@ -24,11 +24,12 @@ jobs:
       - name: Installation des dépendances
         run: cd backend && npm install
 
+      - name: Tests automatisés
+        run: cd backend && npm test
+
       - name: Déploiement sur Azure App Service
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_APP }}
           publish-profile: ${{ secrets.AZURE_PARTIEL }}
           package: ./backend
-      - name: Tests automatisés
-        run: cd backend && npm test
