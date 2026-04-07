@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check du code
+      - name: Check du cde
         uses: actions/checkout@v3
 
       - name: Installation de Node.js
