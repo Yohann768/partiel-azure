@@ -22,8 +22,7 @@ jobs:
           inlineScript: |
             az storage blob upload-batch \
               --account-name frontazure \
+              --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
               --destination '$web' \
               --source ./frontend \
               --overwrite
-        env:
-          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
