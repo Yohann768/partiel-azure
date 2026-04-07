@@ -18,7 +18,7 @@ async function getDbConnection() {
   );
   const secret = await client.getSecret("DB-AZRUE");
   pool = await sql.connect(secret.value);
-  console.log("✅ Connect à la base de données !");
+  console.log(" Connecte à la base de données !");
 }
 
 app.get("/api/test", async (req, res) => {
@@ -32,9 +32,9 @@ app.get("/api/test", async (req, res) => {
 app.get("/api/hello", async (req, res) => {
   try {
     const result = await pool.request().query("SELECT 1 AS ok");
-    res.json({ message: "✅ Connexion BDD réussie !" });
+    res.json({ message: " Connexion BDD réussie !" });
   } catch (err) {
-    res.status(500).json({ message: "❌ Erreur BDD : " + err.message });
+    res.status(500).json({ message: " Erreur BDD : " + err.message });
   }
 });
 
